@@ -1,6 +1,9 @@
 ﻿#include "GameScene.h"
 #include "TextureManager.h"
 #include <cassert>
+#include<MathUtility.h>
+
+using namespace MathUtility;
 
 GameScene::GameScene() {}
 
@@ -52,9 +55,8 @@ void GameScene::Initialize() {
 
 void GameScene::Update() {
 	for (WorldTransform* worldTransform : worldTransforms) {
-		//// TDOO:: ワールド行列の計算
-		//worldTransform->matWorld_ = MathUtility::Matrix4Transform(worldTransform->scale_, worldTransform->rotation_, worldTransform->translation_);
-
+		// TDOO:: ワールド行列の計算
+		worldTransform->matWorld_ = Matrix4Transform(worldTransform->scale_, worldTransform->rotation_, worldTransform->translation_);
 
 		worldTransform->TransferMatrix();
 	}

@@ -46,6 +46,8 @@ Matrix4 Matrix4RotationX(float angle);
 Matrix4 Matrix4RotationY(float angle);
 Matrix4 Matrix4RotationZ(float angle);
 
+Matrix4 Matrix4Transform(const Vector3& scale, const Vector3& rotation, const Vector3& translation);
+
 // 平行移動行列の作成
 Matrix4 Matrix4Translation(float tx, float ty, float tz);
 

@@ -99,6 +99,7 @@
     <ClCompile Include="base\DirectXCommon.cpp" />
     <ClCompile Include="base\TextureManager.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
+    <ClCompile Include="math\MathUtility.cpp" />
     <ClCompile Include="scene\LevelLoader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />

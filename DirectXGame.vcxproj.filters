@@ -66,8 +66,11 @@
     <ClCompile Include="scene\GameScene.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
+    <ClCompile Include="math\MathUtility.cpp">
+      <Filter>ソース ファイル\math</Filter>
+    </ClCompile>
     <ClCompile Include="scene\LevelLoader.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -159,7 +162,7 @@
       <Filter>ヘッダー ファイル\3d</Filter>
     </ClInclude>
     <ClInclude Include="scene\LevelLoader.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
