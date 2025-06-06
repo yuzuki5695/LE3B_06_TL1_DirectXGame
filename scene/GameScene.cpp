@@ -2,9 +2,6 @@
 #include "TextureManager.h"
 #include <cassert>
 
-#include<json.hpp>
-#include <fstream>
-
 GameScene::GameScene() {}
 
 GameScene::~GameScene() {}
@@ -15,84 +12,12 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 	debugText_ = DebugText::GetInstance();
-
-	// 連結してフルパスを得る
-	const std::string fullpath = std::string("Resources/levels/") + "untitled.json";
-
-	// ファイルストリーム
-	std::ifstream file;
-
-	// ファイルを開く
-	file.open(fullpath);
-	// ファイルオープン失敗をチェック
-	if (file.fail()) {
-		assert(0);
-	}
-
-	// JSON文字列から解凍したデータ
-	nlohmann::json deserialized;
 	
-	// 解凍
-	file >> deserialized;
+	// LevelLoader のインスタンスを生成
+	levelLoader = new LevelLoader();
 
-	// 正しいレベルデータファイルかチェック
-	assert(deserialized.is_object());
-	assert(deserialized.contains("name"));
-	assert(deserialized["name"].is_string());
-
-	// "name"を文字列として
-	std::string name = deserialized["name"].get<std::string>();
-	// 正しいレベルデータファイルかチェック
-	assert(name.compare("scene") == 0);
-
-	// レベルデータ格納用インスタンスを生成
-	levelData = new LevelData();
-
-	// "worldTransform"の全オブジェクトを走査
-	for (nlohmann::json& object : deserialized["objects"]) {
-		assert(object.contains("type"));
-
-		// 種別を取得
-		std::string type = object["type"].get<std::string>();
-
-		// 種類ごとの処理
-
-		// MESH
-		if (type.compare("MESH") == 0) {
-			// 要素追加
-			levelData->objects.emplace_back(LevelData::ObjectData{});
-			// 今追加した要素の参照を得る
-			LevelData::ObjectData& objectData = levelData->objects.back();
-
-			if (object.contains("file_name")) {
-				// ファイル名
-				objectData.fileName = object["file_name"];
-			}
-
-
-			// トランスフォームのパラメータ読み込み
-			nlohmann::json& transform = object["transform"];
-			// 平行移動
-			objectData.translation.x = (float)transform["translation"][0];
-			objectData.translation.y = (float)transform["translation"][2];
-			objectData.translation.z = (float)transform["translation"][1];
-			// 回転角
-			objectData.rotation.x = -(float)transform["rotation"][0];
-			objectData.rotation.y = -(float)transform["rotation"][2];
-			objectData.rotation.z = -(float)transform["rotation"][1];
-			// スケーリング
-			objectData.scaling.x = (float)transform["scaling"][0];
-			objectData.scaling.y = (float)transform["scaling"][2];
-			objectData.scaling.z = (float)transform["scaling"][1];
-
-			// TODO: コライダーのパラメータ読み込み
-
-			// TODO: オブジェクト走査を再起関数にまとめ、再起呼出で技を走査する
-			if (object.contains("children")) {
-
-			}
-		}
-	}
+	// JSONファイルからレベルデータを読み込む
+	levelData = levelLoader->LoadFile("untitled");
 
 	// レベルデータに出現するモデルの読み込み
 	for (auto& objectData : levelData->objects) {
@@ -127,8 +52,10 @@ void GameScene::Initialize() {
 
 void GameScene::Update() {
 	for (WorldTransform* worldTransform : worldTransforms) {
-		// TDOO:: ワールド行列の計算
-		//worldTransforms
+		//// TDOO:: ワールド行列の計算
+		//worldTransform->matWorld_ = MathUtility::Matrix4Transform(worldTransform->scale_, worldTransform->rotation_, worldTransform->translation_);
+
+
 		worldTransform->TransferMatrix();
 	}
 }

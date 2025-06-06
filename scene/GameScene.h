@@ -11,26 +11,12 @@
 #include "WorldTransform.h"
 
 #include<map>
-#include<string>
+#include<LevelLoader.h>
 
 /// <summary>
 /// ゲームシーン
 /// </summary>
 class GameScene {
-public: // メンバ関数	
-	// レベルデータ
-	struct LevelData {
-		// オブジェクト1個分のデータ
-		struct ObjectData {
-			// ファイル名
-			std::string fileName;
-			Vector3 translation;
-			Vector3 rotation;
-			Vector3 scaling;
-		};
-		// オブジェクトのコンテナ
-		std::vector<ObjectData> objects;
-	};
 public: // メンバ関数
 	/// <summary>
 	/// コンストクラタ
@@ -66,7 +52,10 @@ private: // メンバ変数
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
-
+	
+	// ポインタ
+	// レベルロード
+	LevelLoader* levelLoader = nullptr;
 
 	// レベルデータ格納用インスタンスを生成
 	LevelData* levelData = nullptr;
