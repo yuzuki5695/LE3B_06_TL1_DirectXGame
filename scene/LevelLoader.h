@@ -2,6 +2,7 @@
 #include<string>
 #include <vector>
 #include <Vector3.h>
+#include <json.hpp>
 
 // レベルデータ
 struct LevelData {
@@ -25,6 +26,9 @@ public:// メンバ関数
 
 	// ファイルの読み込み
 	LevelData* LoadFile(const std::string& fileName);
+	
+	void LoadObjectsRecursive(const nlohmann::json& objectsJson, LevelData& levelData);
+
 private: // メンバ変数
 	LevelData* levelData = nullptr;
 };
